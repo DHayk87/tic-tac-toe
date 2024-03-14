@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, auto);
+    padding: 50px;
+    gap: 50px;
+
+    .x,
+    .o {
+        font-size: min(12vw, 80px);
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+
+        p {
+            margin-top: 25px;
+            font-size: 44px;
+        }
+    }
+
+    .x {
+        color: #ff69b4;
+        /* pink */
+    }
+
+    .o {
+        color: #7fdbff;
+        /* light blue */
+    }
+
+    .table {
+        background-color: rgb(234, 233, 233);
+        border: 2px solid grey;
+        display: grid;
+        grid-template-columns: repeat(3, 150px);
+        grid-template-rows: repeat(3, 150px);
+        position: relative;
+
+        p {
+            cursor: pointer;
+            user-select: none;
+            border: 2px solid grey;
+            text-align: center;
+            line-height: 150px;
+            font-size: 100px;
+            text-transform: uppercase;
+            text-align: center;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+            transition: .2s;
+
+            &:hover {
+                box-shadow: 0 0 5px;
+                background-color: lightgrey;
+            }
+
+        }
+
+        .winnerLine {
+            background-color: red;
+            transition: .5s;
+            position: absolute;
+            width: 0;
+            height: 0;
+            transform-origin: top;
+            border-radius: 5px;
+        }
+    }
+
+    button {
+        grid-column: 2;
+        padding: 15px;
+        justify-self: center;
+    }
+}
+
+.colorX {
+    color: #ff69b4;
+}
+
+.colorO {
+    color: #7fdbff;
+}
