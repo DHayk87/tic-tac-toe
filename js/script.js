@@ -33,7 +33,7 @@ const clickHendler = (e) => {
         player = "o";
         if (player === "o" && !win) {
             let x = setTimeout(() => {
-                ai(tableCombination, e);
+                ai(tableCombination);
                 checkWinner(winningCombination, tableCombination);
                 player = "x";
             }, 300);
@@ -65,7 +65,7 @@ const checkWinner = (wComb, tComb) => {
                 }px)`;
                 setTimeout(() => {
                     winner.style.width = "80%";
-                },400);
+                }, 400);
             } else if (ind >= 3 && ind <= 5) {
                 winner.style.width = "10px";
                 winner.style.transform = `translate(${first.offsetLeft + 70}px,
@@ -73,7 +73,7 @@ const checkWinner = (wComb, tComb) => {
                     `;
                 setTimeout(() => {
                     winner.style.height = "83%";
-                },400);
+                }, 400);
             } else if (ind === 6) {
                 winner.style.width = "10px";
                 winner.style.transform = `rotate(-45deg)`;
@@ -81,7 +81,7 @@ const checkWinner = (wComb, tComb) => {
                 winner.style.left = "30px";
                 setTimeout(() => {
                     winner.style.height = "120%";
-                },400);
+                }, 400);
             } else if (ind === 7) {
                 winner.style.width = "10px";
                 winner.style.transform = `rotate(45deg)`;
@@ -89,7 +89,7 @@ const checkWinner = (wComb, tComb) => {
                 winner.style.right = "30px";
                 setTimeout(() => {
                     winner.style.height = "120%";
-                },400);
+                }, 400);
             }
 
             table.appendChild(winner);
@@ -114,20 +114,42 @@ function ai(tableDataCord) {
         tableDataCord[4] = "o";
         allP[4].textContent = "o";
         allP[4].classList.add("o");
-
         return;
+    }
+    for (let i = 0; i < winningCombination.length; i++) {
+        let d0 = tableDataCord[winningCombination[i][0]];
+        let d1 = tableDataCord[winningCombination[i][1]];
+        let d2 = tableDataCord[winningCombination[i][2]];
+        if (
+            (d0 == "o" && d1 == "o" && d2 == null) ||
+            (d1 == "o" && d2 == "o" && d0 == null) ||
+            (d2 == "o" && d0 == "o" && d1 == null)
+        ) {
+            let data = [d0, d1, d2];
+            if (data.filter((e) => e === "o").length == 2) {
+                tableDataCord[winningCombination[i][data.indexOf(null)]] = "o";
+                allP[winningCombination[i][data.indexOf(null)]].textContent = "o";
+                allP[winningCombination[i][data.indexOf(null)]].classList.add("o");
+
+                return;
+            }
+        }
     }
 
     for (let i = 0; i < winningCombination.length; i++) {
         let d0 = tableDataCord[winningCombination[i][0]];
         let d1 = tableDataCord[winningCombination[i][1]];
         let d2 = tableDataCord[winningCombination[i][2]];
+
+        console.log(d0, d1, d2);
+
         if (
             (d0 == d1 && d1 != null && d2 === null) ||
             (d1 == d2 && d2 != null && d0 === null) ||
             (d2 == d0 && d2 != null && d1 === null)
         ) {
             let data = [d0, d1, d2];
+
             tableDataCord[winningCombination[i][data.indexOf(null)]] = "o";
             allP[winningCombination[i][data.indexOf(null)]].textContent = "o";
             allP[winningCombination[i][data.indexOf(null)]].classList.add("o");
@@ -141,7 +163,6 @@ function ai(tableDataCord) {
 }
 table.addEventListener("click", clickHendler);
 playAgain.addEventListener("click", () => {
-    console.log(!eventCondition);
     if (!eventCondition) {
         table
             .querySelectorAll("p")
